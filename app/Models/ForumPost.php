@@ -7,5 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class ForumPost extends Model
 {
-    use HasFactory;
+    /* 
+     * Table in database
+     * @var string
+     */
+    protected $table = 'post';
+
+    protected $primaryKey = 'post_id';
+
+    public $timestamps = false;
+
+    public function comments()
+    {
+        return $this->hasMany(ForumComment::class);
+    }
+
+    public function thread()
+    {
+        return $this->belongsTo(ForumThread::class);
+    }
 }
