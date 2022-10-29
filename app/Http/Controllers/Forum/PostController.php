@@ -20,7 +20,8 @@ class PostController extends BaseController
     public function index()
     {
         $posts = ForumPost::all();
-        dd($posts);
+        //dd($posts);
+        return view('forum.posts.index', compact('posts'));
     }
 
     /**

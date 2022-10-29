@@ -21,3 +21,7 @@ Route::get('/', function () {
 
 Route::resource('rest', RestTestController::class)->names('restTest');
 Route::resource('posts', PostController::class); 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
