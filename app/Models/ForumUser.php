@@ -9,11 +9,11 @@ class ForumUser extends Model
 {
     use HasFactory;
 
-    /* 
+    /*
      * Table in database
      * @var string
      */
-    protected $table = 'users';
+    protected $table = 'forum_user';
 
     /*
      * Primary key
@@ -26,6 +26,8 @@ class ForumUser extends Model
      * @var string
      */
     protected $keyType = 'string';
+
+    protected $incrementing = false;
 
     /*
      * @var bool

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ForumPost extends Model
 {
-    /* 
+    /*
      * Table in database
      * @var string
      */
@@ -19,11 +19,11 @@ class ForumPost extends Model
 
     public function comments()
     {
-        return $this->hasMany(ForumComment::class);
+        return $this->hasMany(ForumComment::class, 'post_id');
     }
 
     public function thread()
     {
-        return $this->belongsTo(ForumThread::class);
+        return $this->belongsTo(ForumThread::class, 'thread_id');
     }
 }

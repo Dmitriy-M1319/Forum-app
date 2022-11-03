@@ -7,11 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class ForumThread extends Model
 {
-    use HasFactory;
-
     protected $table = 'thread';
 
     protected $primaryKey = 'thread_id';
 
+    protected $fillable = [
+        'theme'
+    ];
+
     public $timestamps = false;
+
+
+    public function posts()
+    {
+        return $this->hasMany(ForumPost::class);
+    }
 }
