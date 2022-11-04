@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RestTestController;
 use App\Http\Controllers\Forum\PostController;
+use App\Http\Controllers\Forum\CommentController;
 use App\Http\Controllers\Forum\ThreadController;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,7 +23,9 @@ Route::get('/', function () {
 
 Route::resources([
     'posts' => PostController::class,
-    'threads' => ThreadController::class]);
+    'threads' => ThreadController::class,
+    'comments' => CommentController::class
+]);
 
 Auth::routes();
 

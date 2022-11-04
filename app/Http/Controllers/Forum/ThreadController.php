@@ -17,7 +17,7 @@ class ThreadController extends Controller
      */
     public function index()
     {
-        $threads = DB::table('thread')->paginate(15);
+        $threads = ForumThread::simplePaginate(15);
         return view('forum.threads.index', ['threads' => $threads]);
     }
 

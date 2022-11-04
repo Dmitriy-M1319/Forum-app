@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Forum;
 use App\Http\Controllers\Forum\BaseController;
 use App\Http\Requests\StoreForumPostRequest;
 use App\Models\ForumPost;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Date;
 
 /**
  * Controller for forum posts
