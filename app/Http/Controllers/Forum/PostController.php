@@ -20,7 +20,6 @@ class PostController extends BaseController
      */
     public function index()
     {
-        $posts = ForumPost::all()->first();
         return view('forum.posts.index', ['posts' => ForumPost::all()]);
     }
 
@@ -32,7 +31,7 @@ class PostController extends BaseController
     public function create()
     {
        $newPost = new ForumPost();
-       $newPost->date_create = Date::now();
+       $newPost->date_create = date('Y-m-d H:i:s');
        return view('forum.posts.create', ['edit' => 0, 'post' => $newPost]);
     }
 
@@ -44,7 +43,8 @@ class PostController extends BaseController
      */
     public function store(StoreForumPostRequest $request)
     {
-        $validation = $request->validate();
+        $validation = $request->validated();
+        $validation['date_create'] = date('Y-m-d H:i:s');
         $post = ForumPost::create($validation);
         return redirect()->route('posts.show', $post->post_id);
     }
@@ -58,6 +58,8 @@ class PostController extends BaseController
     public function show($id)
     {
         $post = ForumPost::where('post_id', $id)->first();
+        if(empty($post))
+            abort(404);
         $comments = $post->comments()->get();
         return view('forum.posts.show', ['post' => $post, 'comments' => $comments]);
     }
@@ -70,7 +72,10 @@ class PostController extends BaseController
      */
     public function edit($id)
     {
-        //
+        $post = ForumPost::where('post_id', $id)->first();
+        if(empty($post))
+            abort(404);
+        return view('forum.posts.edit', ['post'=> $post]);
     }
 
     /**
@@ -80,9 +85,16 @@ class PostController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreForumPostRequest $request, $id)
     {
-        //
+        $valid = $request->validated();
+        $valid['date_create'] = date('Y-m-d H:i:s');
+        $post = ForumPost::where('post_id', $id)->first();
+        if(empty($post))
+            abort(404);
+        $post->fill($valid);
+        $post->save();
+        return redirect()->route('posts.show', $post->post_id);
     }
 
     /**
@@ -93,6 +105,10 @@ class PostController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        $deletedPost = ForumPost::where('post_id', $id)->first();
+        if(empty($deletedPost))
+            abort(404);
+        $deletedPost->delete();
+        return redirect()->route('posts.index');
     }
 }

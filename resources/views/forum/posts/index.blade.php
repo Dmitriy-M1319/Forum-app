@@ -4,7 +4,7 @@
 
 @foreach ($posts as $post)
     <div class="card">
-        <div class="card-header"> Theme: {{ $post->thread()->first()->theme }}</div>
+        <div class="card-header"> Theme: {{ $post->thread()->first()->theme }},  Post #{{ $post->post_id }}</div>
         <div class="card-body">
             <div class="place-items-start">
                 Author: {{ $post->nickname }}

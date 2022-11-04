@@ -56,6 +56,8 @@ class ThreadController extends Controller
     public function show($id)
     {
         $thread = ForumThread::where('thread_id', $id)->first();
+        if(empty($thread))
+            abort(404);
         return view('forum.threads.show', ['thread' => $thread]);
     }
 
@@ -68,6 +70,8 @@ class ThreadController extends Controller
     public function edit($id)
     {
         $thread = ForumThread::where('thread_id', $id)->first();
+        if(empty($thread))
+            abort(404);
         return view('forum.threads.edit', ['thread' => $thread]);
     }
 
@@ -84,6 +88,8 @@ class ThreadController extends Controller
             'theme' =>  'required|string'
         ]);
         $newThread = ForumThread::where('thread_id', $id)->first();
+        if(empty($thread))
+            abort(404);
         $newThread->theme = $valid['theme'];
         $newThread->save();
         return redirect()->route('threads.show', $newThread->thread_id);
@@ -98,8 +104,9 @@ class ThreadController extends Controller
     public function destroy($id)
     {
         $deletedThread = ForumThread::where('thread_id', $id)->first();
-        $id = $deletedThread->thread_id;
+        if(empty($thread))
+            abort(404);
         $deletedThread->delete();
-        return view('forum.threads.delete', ['deleted_thread_id' => $id]);
+        return redirect()->route('threads.index');
     }
 }

@@ -35,6 +35,10 @@
                             </div>
                         </div>
                     </form>
+                    <form class="mt-2" action="{{ route('threads.destroy', $thread->thread_id) }}" method="POST">@csrf
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-outline-danger">Remove Thread</button>
+                    </form>
                 </div>
             </div>
         </div>

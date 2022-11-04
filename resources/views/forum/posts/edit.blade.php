@@ -5,10 +5,11 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Create post') }}</div>
+                <div class="card-header">{{ __('Edit post') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('posts.store') }}">
+                    <form method="POST" action="{{ route('posts.update',$post->post_id) }}">
+                        @method('PUT')
                         @csrf
 
                         <div class="row mb-3">
@@ -64,10 +65,14 @@
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Create') }}
+                                    {{ __('Edit') }}
                                 </button>
                             </div>
                         </div>
+                    </form>
+                    <form class="mt-2" action="{{ route('posts.destroy', $post->post_id) }}" method="POST">@csrf
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-outline-danger">Remove Post</button>
                     </form>
                 </div>
             </div>

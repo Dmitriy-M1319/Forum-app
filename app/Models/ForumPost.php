@@ -17,6 +17,14 @@ class ForumPost extends Model
 
     public $timestamps = false;
 
+    protected $fillable = [
+        'nickname',
+        'date_create',
+        'post_text',
+        'carma',
+        'thread_id'
+    ];
+
     public function comments()
     {
         return $this->hasMany(ForumComment::class, 'post_id');

@@ -10,11 +10,11 @@ class StoreForumPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'nickname' => ['string', 'max:512'],
-            'date_create' => ['date'],
-            'post_text' => ['nullable', 'string'],
-            'carma' => ['nullable', 'integer'],
-            'thread_id' => ['integer']
+            'nickname' => 'required|string|max:512',
+            'date_create' => 'nullable|string',
+            'post_text' => 'required|string',
+            'carma' => 'nullable|integer',
+            'thread_id' => 'required|integer'
         ];
     }
 }
