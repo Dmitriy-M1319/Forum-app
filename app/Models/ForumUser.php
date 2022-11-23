@@ -27,7 +27,29 @@ class ForumUser extends Model
      */
     protected $keyType = 'string';
 
-    protected $incrementing = false;
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'nickname',
+        'role',
+        'register_date',
+        'password',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    public $incrementing = false;
 
     /*
      * @var bool

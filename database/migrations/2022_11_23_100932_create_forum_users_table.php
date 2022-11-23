@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('failed_jobs', function (Blueprint $table) {
-            $table->id();
-            $table->string('uuid')->unique();
-            $table->text('connection');
-            $table->text('queue');
-            $table->longText('payload');
-            $table->longText('exception');
-            $table->timestamp('failed_at')->useCurrent();
+        Schema::dropIfExists('forum_user');
+        Schema::create('forum_user', function (Blueprint $table) {
+            $table->string('nickname', 30)->primary();
+            $table->string('password');
+            $table->integer('role');
+            $table->rememberToken();
+            $table->date('register_date');
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('failed_jobs');
+        Schema::dropIfExists('forum_user');
     }
 };
