@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Forum\PostController;
 use App\Http\Controllers\Forum\CommentController;
@@ -27,6 +28,7 @@ Route::resources([
     'comments' => CommentController::class
 ]);
 
+Route::get('/user', [App\Http\Controllers\Forum\ForumUserController::class, 'index'])->name('user_index');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\ForumUser;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -63,10 +64,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        return ForumUser::create([
             'nickname' => $data['nickname'],
             'role' => 1,
             'password' => Hash::make($data['password']),
+            'register_date' => date('Y-m-d H:i:s')
         ]);
     }
 }

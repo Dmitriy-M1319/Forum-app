@@ -11,7 +11,7 @@ class ForumPost extends Model
      * Table in database
      * @var string
      */
-    protected $table = 'post';
+    protected $table = 'posts';
 
     protected $primaryKey = 'post_id';
 

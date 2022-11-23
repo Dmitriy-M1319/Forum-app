@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ForumThread extends Model
 {
-    protected $table = 'thread';
+    protected $table = 'threads';
 
     protected $primaryKey = 'thread_id';
 

@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('comment', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id('comm_id');
             $table->integer('post_id');
-            $table->foreign('post_id')->references('post_id')->on('post');
+            $table->foreign('post_id')->references('post_id')->on('posts');
             $table->string('nickname', 30);
-            $table->foreign('nickname')->references('nickname')->on('forum_user');
+            $table->foreign('nickname')->references('nickname')->on('forum_users');
             $table->text('comm_text');
             $table->integer('carma');
         });
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('forum_comment');
+        Schema::dropIfExists('comments');
     }
 };

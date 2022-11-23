@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class ForumUser extends Model
+class ForumUser extends Authenticatable
 {
-    use HasFactory;
+    use Notifiable;
+    use \Illuminate\Auth\Authenticatable;
+    use Authorizable;
 
     /*
      * Table in database
      * @var string
      */
-    protected $table = 'forum_user';
+    protected $table = 'forum_users';
 
     /*
      * Primary key

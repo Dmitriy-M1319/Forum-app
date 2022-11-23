@@ -13,8 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('forum_user');
-        Schema::create('forum_user', function (Blueprint $table) {
+        Schema::create('forum_users', function (Blueprint $table) {
             $table->string('nickname', 30)->primary();
             $table->string('password');
             $table->integer('role');
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('forum_user');
+        Schema::dropIfExists('forum_users');
     }
 };

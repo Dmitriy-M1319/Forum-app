@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'forum_users',
     ],
 
     /*
@@ -38,7 +38,17 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'forum_users',
+        ],
+
+        'forum_user' => [
+            'driver' => 'session',
+            'provider' => 'forum_users',
+        ],
+
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'forum_users',
         ],
     ],
 
@@ -60,15 +70,15 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'forum_users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\ForumUser::class,
+            'model' => 'App\Models\ForumUser',
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+         'users' => [
+             'driver' => 'database',
+             'table' => 'forum_users',
+         ],
     ],
 
     /*
@@ -87,8 +97,8 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'forum_user' => [
+            'provider' => 'forum_users',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

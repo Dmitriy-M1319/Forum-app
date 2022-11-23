@@ -9,11 +9,11 @@ class ForumComment extends Model
 {
     use HasFactory;
 
-    /* 
+    /*
      * Table in database
      * @var string
      */
-    protected $table = 'comment';
+    protected $table = 'comments';
 
     /*
      * Primary key
