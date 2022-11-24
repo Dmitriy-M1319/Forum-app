@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Forum;
 use App\Http\Controllers\Forum\BaseController;
 use App\Http\Requests\StoreForumPostRequest;
 use App\Models\ForumPost;
+use App\Models\ForumThread;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Controller for forum posts
@@ -30,7 +33,10 @@ class PostController extends BaseController
     {
        $newPost = new ForumPost();
        $newPost->date_create = date('Y-m-d H:i:s');
-       return view('forum.posts.create', ['edit' => 0, 'post' => $newPost]);
+       $newPost->nickname = Auth::user()->nickname;
+       $newPost->carma = 0;
+       $threads = ForumThread::all();
+       return view('forum.posts.create', ['edit' => 0, 'post' => $newPost, 'threads' => $threads]);
     }
 
     /**
@@ -44,7 +50,8 @@ class PostController extends BaseController
         $validation = $request->validated();
         $validation['date_create'] = date('Y-m-d H:i:s');
         $post = ForumPost::create($validation);
-        return redirect()->route('posts.show', $post->post_id);
+        //return redirect()->route('posts.show', $post->post_id);
+        return redirect()->route('user_index');
     }
 
     /**
@@ -73,7 +80,8 @@ class PostController extends BaseController
         $post = ForumPost::where('post_id', $id)->first();
         if(empty($post))
             abort(404);
-        return view('forum.posts.edit', ['post'=> $post]);
+        $threads = ForumThread::all();
+        return view('forum.posts.edit', ['post'=> $post, 'threads' => $threads]);
     }
 
     /**
@@ -92,7 +100,8 @@ class PostController extends BaseController
             abort(404);
         $post->fill($valid);
         $post->save();
-        return redirect()->route('posts.show', $post->post_id);
+        //return redirect()->route('posts.show', $post->post_id);
+        return redirect()->route('user_index');
     }
 
     /**
@@ -107,6 +116,16 @@ class PostController extends BaseController
         if(empty($deletedPost))
             abort(404);
         $deletedPost->delete();
+        //return redirect()->route('posts.index');
+        return redirect()->route('/user');
+    }
+
+    public function clickCarma(Request $request, $id) {
+        $value = $request['carma_value'];
+        settype($value, "integer");
+        $post = ForumPost::where('post_id', $id)->first();
+        $post->carma = (int)($post->carma) + $value;
+        $post->save();
         return redirect()->route('posts.index');
     }
 }

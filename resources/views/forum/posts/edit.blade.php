@@ -58,7 +58,11 @@
                             <label for="thread_id" class="col-md-4 col-form-label text-md-end">{{ __('Theme') }}</label>
 
                             <div class="col-md-6">
-                                <input id="thread_id" type="text" class="form-control @error('thread_id') is-invalid @enderror" name="thread_id" value="{{ $post->thread_id }}" required autocomplete="thread_id">
+                                <select  id="thread_id"  name="thread_id">
+                                    @foreach($threads as $thread)
+                                        <option value="{{$thread->thread_id}}">{{ $thread->theme }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 

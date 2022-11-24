@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="card">
+    <div class="card-header">Found posts</div>
     @if ($posts->count() != 0)
         @foreach ($posts as $post)
             <div class="card">
@@ -20,20 +22,6 @@
                             Carma: {{ $post->carma}}
                         </div>
                     </div>
-                    <form method="POST" action="{{ route('click_carma', $post->post_id) }}">@method('PUT')
-                        @csrf
-
-                        <p>
-                            <input type="radio" value="1" checked name="carma_value"/>Plus Carma
-                        </p>
-                        <p>
-                            <input type="radio" value="-1" name="carma_value"/>Minus Carma
-                        </p>
-                        <button class="btn btn-secondary" type="submit">
-                            {{ __('Send Carma') }}
-                        </button>
-                    </form>
-                    <br>
                     <div class="btn btn-primary">
                         <a class="link-light" href="{{ route('posts.show', $post->post_id) }}">Comments</a>
                     </div>
@@ -41,4 +29,5 @@
             </div>
         @endforeach
     @endif
+    </div>
 @endsection

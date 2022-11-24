@@ -21,9 +21,10 @@
                 </div>
             </div>
         </div>
+        <br>
         @if ($comments->count() != 0)
             @foreach ($comments as $comment )
-                <div class="container">
+                <div class="card">
                     <div class="card-header"> Comment #{{ $comment->comm_id }}</div>
                     <div class="card-body">
                         <div class="place-items-start">

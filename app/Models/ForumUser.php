@@ -59,4 +59,12 @@ class ForumUser extends Authenticatable
      */
     public $timestamps = false;
 
+    public function posts() {
+        return $this->hasMany(ForumPost::class, 'nickname');
+    }
+
+    public function comments() {
+        return $this->hasMany(ForumComment::class, 'nickname');
+    }
+
 }
