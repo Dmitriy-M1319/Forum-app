@@ -19,20 +19,27 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::middleware('auth')->group(function () {
     Route::resources([
         'posts' => PostController::class,
         'threads' => ThreadController::class,
-        'comments' => CommentController::class
     ]);
 
-    Route::match(['put', 'patch'], '/posts/{id}/carma', [App\Http\Controllers\Forum\PostController::class, 'clickCarma'])->name('click_carma');
+    Route::resource('comments', CommentController::class)->only([
+        'index', 'show', 'store', 'update', 'destroy', 'edit'
+    ]);
+
+
+    Route::match(['put', 'patch'], '/posts/{id}/carma', [App\Http\Controllers\Forum\PostController::class, 'clickCarma'])->name('click_carma_post');
+
+    Route::match(['put', 'patch'], '/comments/{id}/carma', [App\Http\Controllers\Forum\CommentController::class, 'clickCarma'])->name('click_carma_comment');
+    Route::get('/comments/create/{id}', [CommentController::class, 'create'])->name('comments.create');
+
     Route::get('/user', [App\Http\Controllers\Forum\ForumUserController::class, 'index'])->name('user_index');
     Route::post('/user/find', [App\Http\Controllers\Forum\ForumUserController::class, 'findPosts'])->name('find_posts');
-    Route::match(['put', 'patch'], '/posts/{id}/carma', [App\Http\Controllers\Forum\PostController::class, 'clickCarma'])->name('click_carma');
 });
 
 

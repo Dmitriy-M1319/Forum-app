@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Forum;
 use App\Http\Controllers\Controller;
 use App\Models\ForumComment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -23,9 +24,13 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+       $newComment = new ForumComment();
+       $newComment->nickname = Auth::user()->nickname;
+       $newComment->carma = 0;
+       $newComment->post_id = $id;
+       return view('forum.comments.create', ['edit' => 0, 'comment' => $newComment]);
     }
 
     /**
@@ -36,7 +41,15 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nickname' => 'required|max:30',
+            'comm_text' => 'required',
+            'post_id' => 'required|integer',
+            'carma' => 'required|integer',
+        ]);
+        settype($validated['post_id'], "integer");
+        $comment = ForumComment::create($validated);
+        return redirect()->route('posts.show', $validated['post_id']);
     }
 
     /**
@@ -58,7 +71,10 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comment = ForumComment::where('comm_id', $id)->first();
+        if(empty($comment))
+            abort(404);
+        return view('forum.comments.edit', ['comment'=> $comment]);
     }
 
     /**
@@ -70,7 +86,21 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'nickname' => 'required|max:30',
+            'comm_text' => 'required',
+            'post_id' => 'required|integer',
+            'carma' => 'required|integer',
+        ]);
+        settype($validated['post_id'], "integer");
+
+        $comment = ForumComment::where('comm_id', $id)->first();
+        if(empty($comment))
+            abort(404);
+        $comment->fill($validated);
+        $comment->save();
+        //return redirect()->route('posts.show', $post->post_id);
+        return redirect()->route('user_index');
     }
 
     /**
@@ -81,6 +111,20 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deletedComment = ForumComment::where('comm_id', $id)->first();
+        if(empty($deletedComment))
+            abort(404);
+        $deletedComment->delete();
+        return redirect()->route('user_index');
+    }
+
+    public function clickCarma(Request $request, $id) {
+        $value = $request['carma_value'];
+        settype($value, "integer");
+        $comment = ForumComment::where('comm_id', $id)->first();
+        $post_id = $comment->post_id;
+        $comment->carma = (int)($comment->carma) + $value;
+        $comment->save();
+        return redirect()->route('posts.show', $post_id);
     }
 }

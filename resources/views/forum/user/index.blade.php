@@ -61,6 +61,9 @@
                                             <div class="btn btn-primary">
                                                 <a class="link-light" href="{{ route('posts.show', $comment->post_id) }}">Post</a>
                                             </div>
+                                            <div class="btn btn-secondary">
+                                                <a class="link-light" href="{{ route('comments.edit', $comment->comm_id) }}">Edit Comment</a>
+                                            </div>
                                         </div>
                                     </div>
                                 @endforeach

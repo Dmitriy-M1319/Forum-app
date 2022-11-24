@@ -20,7 +20,7 @@
                             Carma: {{ $post->carma}}
                         </div>
                     </div>
-                    <form method="POST" action="{{ route('click_carma', $post->post_id) }}">@method('PUT')
+                    <form method="POST" action="{{ route('click_carma_post', $post->post_id) }}">@method('PUT')
                         @csrf
 
                         <p>

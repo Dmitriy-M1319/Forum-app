@@ -21,7 +21,7 @@ class PostController extends BaseController
      */
     public function index()
     {
-        return view('forum.posts.index', ['posts' => ForumPost::all()]);
+        return view('forum.posts.index', ['posts' => ForumPost::OrderBy('post_id')->get()]);
     }
 
     /**
@@ -65,7 +65,7 @@ class PostController extends BaseController
         $post = ForumPost::where('post_id', $id)->first();
         if(empty($post))
             abort(404);
-        $comments = $post->comments()->get();
+        $comments = $post->comments()->orderBy('comm_id')->get();
         return view('forum.posts.show', ['post' => $post, 'comments' => $comments]);
     }
 
@@ -117,7 +117,7 @@ class PostController extends BaseController
             abort(404);
         $deletedPost->delete();
         //return redirect()->route('posts.index');
-        return redirect()->route('/user');
+        return redirect()->route('user_index');
     }
 
     public function clickCarma(Request $request, $id) {

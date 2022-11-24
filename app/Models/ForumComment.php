@@ -26,6 +26,13 @@ class ForumComment extends Model
      */
     public $timestamps = false;
 
+    protected $fillable = [
+        'nickname',
+        'post_id',
+        'comm_text',
+        'carma'
+    ];
+
     public function post()
     {
         return $this->belongsTo(ForumPost::class);
