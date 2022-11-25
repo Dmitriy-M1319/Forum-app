@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Forum\ForumUserController;
+use App\Repositories\ForumUserRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Forum\PostController;
 use App\Http\Controllers\Forum\CommentController;
@@ -37,13 +40,17 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/comments/create/{id}', [CommentController::class, 'create'])->name('comments.create');
 
-    Route::get('/threads/admin', function (\Illuminate\Http\Request $request){
-        dd($request);
-        //return redirect()->route('threads.edit', $id);
+    Route::get('/threadAdminEdit', function (Request $request){
+        return redirect()->route('threads.edit', $request['thread_id']);
     })->name('threads.admin');
 
     Route::get('/user', [App\Http\Controllers\Forum\ForumUserController::class, 'index'])->name('user_index');
     Route::post('/user/find', [App\Http\Controllers\Forum\ForumUserController::class, 'findPosts'])->name('find_posts');
+
+    Route::delete('/user/destroy', function (Request $request){
+        ForumUserRepository::destroyUser($request['nickname']);
+        return redirect()->route("user_index");
+    })->name('users.admin');
 });
 
 
