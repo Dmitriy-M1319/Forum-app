@@ -80,6 +80,10 @@ class PostController extends BaseController
         $post = ForumPost::where('post_id', $id)->first();
         if(empty($post))
             abort(404);
+
+        if(($post->nickname != Auth::user()->nickname) && (Auth::user()->role > 0))
+            abort(404);
+
         $threads = ForumThread::all();
         return view('forum.posts.edit', ['post'=> $post, 'threads' => $threads]);
     }

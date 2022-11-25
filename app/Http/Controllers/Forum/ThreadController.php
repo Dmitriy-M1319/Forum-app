@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreForumThreadRequest;
 use App\Models\ForumThread;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ThreadController extends Controller
@@ -71,6 +72,8 @@ class ThreadController extends Controller
     {
         $thread = ForumThread::where('thread_id', $id)->first();
         if(empty($thread))
+            abort(404);
+        if(Auth::user()->role > 0)
             abort(404);
         return view('forum.threads.edit', ['thread' => $thread]);
     }

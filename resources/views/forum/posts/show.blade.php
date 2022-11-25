@@ -51,6 +51,11 @@
                             {{ __('Send Carma') }}
                         </button>
                     </form>
+                        @if(\Illuminate\Support\Facades\Auth::user()->role == 0)
+                            <div class="btn btn-primary">
+                                <a class="link-light" href="{{ route('comments.edit', $comment->comm_id) }}">Edit Comment</a>
+                            </div>
+                        @endif
                     </div>
                 <div>
             @endforeach

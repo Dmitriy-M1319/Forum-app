@@ -74,6 +74,10 @@ class CommentController extends Controller
         $comment = ForumComment::where('comm_id', $id)->first();
         if(empty($comment))
             abort(404);
+
+        if(($comment->nickname != Auth::user()->nickname) && (Auth::user()->role > 0))
+            abort(404);
+
         return view('forum.comments.edit', ['comment'=> $comment]);
     }
 

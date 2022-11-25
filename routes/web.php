@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Forum\PostController;
 use App\Http\Controllers\Forum\CommentController;
@@ -34,9 +33,14 @@ Route::middleware('auth')->group(function () {
 
 
     Route::match(['put', 'patch'], '/posts/{id}/carma', [App\Http\Controllers\Forum\PostController::class, 'clickCarma'])->name('click_carma_post');
-
     Route::match(['put', 'patch'], '/comments/{id}/carma', [App\Http\Controllers\Forum\CommentController::class, 'clickCarma'])->name('click_carma_comment');
+
     Route::get('/comments/create/{id}', [CommentController::class, 'create'])->name('comments.create');
+
+    Route::get('/threads/admin', function (\Illuminate\Http\Request $request){
+        dd($request);
+        //return redirect()->route('threads.edit', $id);
+    })->name('threads.admin');
 
     Route::get('/user', [App\Http\Controllers\Forum\ForumUserController::class, 'index'])->name('user_index');
     Route::post('/user/find', [App\Http\Controllers\Forum\ForumUserController::class, 'findPosts'])->name('find_posts');

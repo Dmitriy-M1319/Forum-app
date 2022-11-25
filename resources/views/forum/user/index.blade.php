@@ -101,6 +101,29 @@
                                 </form>
                             </div>
                         </div>
+                        <div class="card">
+                            <div class="card-header">Admin Actions</div>
+                            <div class="card-body">
+                                <form method="GET" action="{{ route('threads.admin') }}">
+                                    @csrf
+                                    <label for="id" >{{ __('Edit Thread By Id') }}</label>
+
+                                        <div class="col-md-6">
+                                            <input id="id" type="text" class="form-control @error('id') is-invalid @enderror" name="id">
+
+                                            @error('id')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <button type="submit" class="btn btn-secondary">
+                                            {{ __('Edit Thread') }}
+                                        </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <form method="POST" action="{{ route('logout') }}">@csrf

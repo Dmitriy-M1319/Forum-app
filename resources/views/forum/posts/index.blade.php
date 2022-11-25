@@ -37,6 +37,11 @@
                     <div class="btn btn-primary">
                         <a class="link-light" href="{{ route('posts.show', $post->post_id) }}">Comments</a>
                     </div>
+                    @if(\Illuminate\Support\Facades\Auth::user()->role == 0)
+                        <div class="btn btn-secondary">
+                            <a class="link-light" href="{{ route('posts.edit', $post->post_id) }}">Edit Post</a>
+                        </div>
+                    @endif
                 </div>
             </div>
         @endforeach
